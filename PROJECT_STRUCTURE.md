@@ -45,11 +45,12 @@
 #### 인프라 & 미들웨어
 | 기술 | 용도 |
 |------|------|
-| **Spring Cloud Gateway** | API 게이트웨이, 라우팅, 로드밸런싱 |
-| **Apache Zookeeper** | 서비스 디스커버리 |
+| **Spring Cloud Gateway** | API 게이트웨이, 동적 서비스 디스커버리 기반 라우팅 |
+| **Apache Zookeeper** | 서비스 디스커버리 (test:12181) |
 | **Apache Kafka** | 메시징, 이벤트 스트리밍 |
-| **PostgreSQL** | 관계형 데이터베이스 (JPA 사용) |
+| **PostgreSQL** | 관계형 데이터베이스 (gemini:5432, JPA 사용) |
 | **Apache Cassandra** | NoSQL (문서 저장, 3중화) |
+| **Elasticsearch** | 변이 분석 데이터 검색 (gemini:9200, pisces:9200, 2노드 클러스터) |
 | **R2DBC** | 리액티브 데이터베이스 드라이버 |
 
 #### 주요 라이브러리
@@ -235,14 +236,27 @@ panel-project-claude/
 **위치**: `/gateway/src/main/java/com/greencross/lims/service/`
 
 **주요 기능**:
-- Spring Cloud Gateway를 통한 라우팅
-- 로드밸런싱
-- 정적 리소스 호스팅 (UI 모듈들의 빌드 결과물)
-- Zookeeper 서비스 디스커버리 클라이언트
+- **동적 서비스 디스커버리**: Zookeeper에서 등록된 모든 마이크로서비스 자동 탐색
+- **자동 라우팅**: 각 서비스의 `/services` 엔드포인트를 호출하여 메뉴 구성 정보 수집
+- **로드밸런싱**: LoadBalancerClient를 통한 자동 부하 분산
+- **정적 리소스 호스팅**: UI 모듈들의 빌드 결과물 제공
+
+**라우팅 방식**:
+```java
+// Router.java에서 동적으로 서비스 목록을 가져와 메뉴 구성
+discoveryClient.getServices()
+    .filter(service -> !"panel-service-gateway".equalsIgnoreCase(service))
+    .map(loadBalancerClient::choose)
+    .map(svc -> svc.getUri() + "/services")
+    .flatMap(this::request)
+    .collect(/* "패널검사" 메뉴로 집계 */)
+```
+- 각 마이크로서비스는 자신의 메뉴 정보를 `/services` 엔드포인트로 제공
+- Gateway가 이를 수집하여 통합 메뉴 구성
 
 **주요 파일**:
 - `Application.java` - 메인 진입점
-- `Router.java` - 라우팅 규칙 정의
+- `Router.java` - 동적 서비스 디스커버리 및 메뉴 구성
 - `WebConfig.java` - CORS, 정적 리소스 설정
 - `src/main/resources/static/` - UI 빌드 결과물 배치
 
@@ -423,6 +437,10 @@ tasks.compileGwt {
 
 ##### `snv/` - SNV 서비스
 **역할**: SNV 관련 추가 서비스
+**진입점**: `com.greencross.lims.Application`
+**⚠️ 상태**: DEPRECATED (더 이상 사용 안 함, README.md에 명시)
+
+**참고**: 현재는 `variant-snv` 모듈로 대체되었습니다.
 
 ##### `miscellaneous/` - 기타 기능
 **역할**: 기타 보조 기능
@@ -441,8 +459,29 @@ tasks.compileGwt {
 - 보고서 생성 레거시 인터페이스
 
 ##### `analysis-crawler/` - 분석 크롤러
-**역할**: 분석 결과 자동 수집
+**역할**: 분석 결과 자동 수집 및 알림
 **진입점**: `com.greencross.lims.Application`
+
+**주요 기능**:
+- 분석 결과 파일 자동 감지 및 처리 (C:\Affymetrix\AA, Pr, Er)
+- Elasticsearch에 변이 데이터 인덱싱
+- Jandi webhook을 통한 실시간 알림
+
+**연동 시스템**:
+- **PostgreSQL**: gemini:5432 (메타데이터 저장)
+- **Elasticsearch**: gemini:9200, pisces:9200 (변이 데이터 검색)
+- **Jandi Webhook**:
+  - 일반 알림: https://wh.jandi.com/connect-api/webhook/17558388/...
+  - Cancer 전용: https://wh.jandi.com/connect-api/webhook/17558388/33055b7b...
+  - BRCA 전용: https://wh.jandi.com/connect-api/webhook/17558388/6da3dafb...
+  - DGS 전용: https://wh.jandi.com/connect-api/webhook/17558388/13e55902...
+
+**처리 워크플로우**:
+1. 임시 디렉토리(tmp-dir)에서 분석 결과 파일 감지
+2. 파일 파싱 및 데이터베이스 저장
+3. Elasticsearch에 인덱싱 (analysis-snv, snv, depth 인덱스)
+4. 처리 완료 시 Jandi webhook으로 알림 전송
+5. 성공 시 processed-dir로 이동, 실패 시 undefined-dir로 이동
 
 ##### `worklist-r2dbc/` - R2DBC 워크리스트
 **역할**: 리액티브 방식의 워크리스트 서비스
@@ -539,6 +578,9 @@ tasks.compileGwt {
 
 ##### `snv-ui/` - SNV UI
 **GWT 모듈**: `com.greencross.lims.Snv`
+**⚠️ 상태**: DEPRECATED (더 이상 사용 안 함, README.md에 명시)
+
+**참고**: 현재는 `variant-snv-ui` 모듈로 대체되었습니다.
 
 ##### `miscellaneous-ui/` - 기타 기능 UI
 **GWT 모듈**: `com.greencross.lims.Misc`
@@ -1729,6 +1771,116 @@ spring:
 
 ---
 
+## Elasticsearch 인덱스 구조
+
+프로젝트는 변이 분석 데이터를 위해 3개의 Elasticsearch 인덱스를 사용합니다.
+
+### 1. analysis-snv 인덱스
+
+**용도**: 분석 완료된 SNV(Single Nucleotide Variant) 데이터 저장
+
+**설정**:
+- Shards: 64
+- Replicas: 3
+- Alias: `analysis-snv`
+
+**주요 필드**:
+- **변이 정보**: chrom, pos, ref, alt, gene.refgene
+- **주석 정보**:
+  - ClinVar: class, clnsig, clndbn
+  - HGMD: hgvsc, hgvsp, mut, pmid
+  - dbSNP, COSMIC, gnomAD 등
+- **In-silico 예측**:
+  - SIFT, PolyPhen2, CADD, DANN, FATHMM
+  - MetaSVM, MetaLR, M-CAP
+  - GERP++, phyloP, phastCons
+- **빈도 정보**:
+  - 1000 Genomes, ExAC, gnomAD (전체/EAS/SAS)
+  - krgdb_af (한국인 빈도)
+  - wes300_af, cancer2770_freq
+- **분류 정보**: class, class_order, tier, tags
+- **샘플 정보**: sample, analysis, depth, vaf, genotype
+
+### 2. snv 인덱스
+
+**용도**: 원시 SNV 데이터 저장 (분석 전/중간 단계)
+
+**설정**:
+- Shards: 64
+- Replicas: 3
+- Alias: `snv`
+
+**주요 필드** (analysis-snv와 유사하나 추가 필드 포함):
+- **VEP 주석**: consequence, impact, biotype, existing_variation
+- **Caller 정보**: caller, mutect2_filter
+- **품질 정보**: base_quality, alt_depth
+- **OncoKB 정보**: oncogenicity, mutation_effect, abstract
+
+### 3. depth 인덱스
+
+**용도**: Coverage/Depth 정보 저장
+
+**설정**:
+- Shards: 64
+- Replicas: 3
+- Alias: `depth`
+
+**주요 필드**:
+- **위치 정보**: chrom, start, end, gene, exon
+- **Depth 정보**:
+  - filtered/not_filtered 별 평균 depth
+- **Coverage 정보**:
+  - 1x, 5x, 10x, 20x, 30x, 50x, 100x 커버리지 비율
+  - filtered/not_filtered 별 분리
+
+### Elasticsearch 설정 파일
+
+프로젝트 루트에 인덱스 매핑 파일이 있습니다:
+- `ES-analysis-snv.txt` - analysis-snv 인덱스 매핑
+- `ES-snv.txt` - snv 인덱스 매핑
+- `ES-depth.txt` - depth 인덱스 매핑
+
+### 커스텀 Analyzer
+
+**escape_special_characters_analyzer**:
+특수 문자를 이스케이프 처리 (HGVS 표기법 등에 사용)
+```
+: → _doublecolon_
+> → _greaterthan_
+< → _lessthan_
+. → _dot_
+= → _equals_
++ → _plus_
+- → _minus_
+( → _openbracket_
+) → _closebracket_
+```
+
+**escape_slash_analyzer**:
+슬래시를 이스케이프 처리 (exon, codon 표기에 사용)
+```
+/ → _slash_
+```
+
+### 데이터 흐름
+
+```
+분석 파이프라인 완료
+  ↓
+analysis-crawler가 결과 파일 감지
+  ↓
+VCF 파일 파싱
+  ↓
+Elasticsearch 인덱싱
+  ├─→ analysis-snv (최종 분석 결과)
+  ├─→ snv (원시 변이 데이터)
+  └─→ depth (커버리지 정보)
+  ↓
+UI에서 Elasticsearch 쿼리하여 표시
+```
+
+---
+
 ## 부록
 
 ### 주요 설정 파일 예시
@@ -1784,7 +1936,10 @@ logging:
     name: logs/worklist.log
 ```
 
-#### docker-compose.yml
+#### docker-compose.yml (참고용)
+
+**⚠️ 주의**: 실제 프로젝트에는 `docker-compose.yml` 파일이 존재하지 않습니다.
+아래는 로컬 개발 환경 구성을 위한 참고용 예시입니다.
 
 ```yaml
 version: '3.8'
@@ -1832,10 +1987,29 @@ services:
     volumes:
       - postgres-data:/var/lib/postgresql/data
 
+  elasticsearch:
+    image: elasticsearch:8.8.0
+    environment:
+      - discovery.type=single-node
+      - xpack.security.enabled=false
+      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+    ports:
+      - "9200:9200"
+      - "9300:9300"
+    volumes:
+      - es-data:/usr/share/elasticsearch/data
+
 volumes:
   cassandra-data:
   postgres-data:
+  es-data:
 ```
+
+**프로덕션 환경**:
+- 실제 서버는 별도로 구성된 인프라 사용 (gemini, pisces 등)
+- Elasticsearch 2노드 클러스터 운영 (gemini:9200, pisces:9200)
+- PostgreSQL: gemini:5432
+- Zookeeper: test:12181
 
 ### 참고 자료
 
@@ -1855,6 +2029,17 @@ volumes:
 
 ---
 
-**문서 버전**: 1.0
+**문서 버전**: 1.1
 **최종 수정일**: 2025-11-20
 **작성자**: Claude AI (유지보수 가이드)
+
+### 변경 이력
+- **v1.1** (2025-11-20):
+  - Elasticsearch 인프라 정보 추가 (gemini:9200, pisces:9200)
+  - Elasticsearch 인덱스 구조 상세 설명 추가 (analysis-snv, snv, depth)
+  - Gateway 동적 서비스 디스커버리 방식 상세 설명
+  - analysis-crawler Jandi webhook 알림 시스템 추가
+  - snv/snv-ui 모듈 DEPRECATED 명시
+  - docker-compose.yml이 실제로는 없음을 명시 (참고용 예시로 변경)
+  - 프로덕션 환경 서버 정보 추가 (gemini, pisces, test)
+- **v1.0** (2025-11-20): 초기 문서 작성
