@@ -1,0 +1,58 @@
+plugins {
+    id "org.wisepersist.gwt" version "1.1.11"
+    id "java"
+    id "war"
+}
+apply plugin: 'gwt'
+
+group = "com.greencross"
+version = "1.0"
+java.sourceCompatibility = JavaVersion.VERSION_17
+[compileJava, compileTestJava]*.options*.encoding = "UTF-8"
+
+repositories {
+    mavenCentral()
+    mavenLocal()
+}
+dependencies {
+    implementation project(":data")
+    implementation project(":sample-panel")
+    implementation('com.greencross:lims-api-gateway-data:1.0')
+    implementation('com.greencross:lims-service:1.1')
+    implementation('com.greencross:lims-sheet:1.1')
+    implementation('com.greencross:lims-service-data:1.0')
+    implementation('com.greencross:lims-service-util:1.0')
+    implementation("com.greencross:lims-icon:1.1")
+    implementation("org.jboss.elemento:elemento-core:1.0.3")
+    implementation("com.google.elemental2:elemental2-svg:1.1.0")
+    implementation('com.google.gwt:gwt-user:2.9.0')
+    implementation('com.google.gwt:gwt-dev:2.9.0')
+    implementation('net.sayaya:ui:3.1')
+    implementation('net.sayaya:calculator:1.0')
+    implementation("org.projectlombok:lombok:1.18.20")
+    annotationProcessor("org.projectlombok:lombok:1.18.20")
+}
+gwt {
+    gwt.modules "com.greencross.lims.File"
+    gwtVersion = "2.9.0"
+    minHeapSize = "1024M"
+    maxHeapSize = "2048M"
+}
+ext {
+    lombok = project.configurations.annotationProcessor.find { it.name.startsWith("lombok") }
+}
+compileGwt {
+    jvmArgs "-XX:ReservedCodeCacheSize=512M","-javaagent:${lombok}=ECJ"
+}
+gwtDev {
+    jvmArgs "-XX:ReservedCodeCacheSize=512M","-javaagent:${lombok}=ECJ"
+    port 9663
+    codeServerPort 9662
+    war file("src/main/webapp")
+}
+war {
+    archiveFileName = "panel-service-file.war"
+}
+clean.doFirst {
+    delete "build/"
+}

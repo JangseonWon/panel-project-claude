@@ -1,0 +1,39 @@
+package com.greencross.lims.report.tmp;
+
+import com.gcgenome.lims.report.Resource;
+import com.greencross.lims.report.HasSign;
+import org.apache.pdfbox.pdmodel.font.PDFont;
+
+import java.awt.*;
+
+public interface N159Resource extends Resource, HasSign {
+	PDFont fontDefault();
+	PDFont fontTitle();
+	PDFont fontHeader();
+	PDFont fontText();
+
+	default Color colorPrimary() {
+		return Color.decode("0x8E3A80");
+	}
+	default Color colorSecondary() {
+		return Color.decode("0x8E3A80");
+	}
+	default Color colorPrimaryLine() {
+		return Color.decode("0xE1B6DA");
+	}
+	default Color colorSecondaryLine() {
+		return Color.decode("0xE1B6DA");
+	}
+	default Color colorGray() {
+		return Color.decode("0xEFEFEF");
+	}
+	default Color colorText() {
+		return Color.decode("0x484848");
+	}
+	default Color colorTextWithPrimary() {
+		return Color.WHITE;
+	}
+	default Color colorTextWithSecondary() {
+		return Color.WHITE;
+	}
+}

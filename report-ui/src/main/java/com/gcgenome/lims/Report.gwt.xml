@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module rename-to="com.gcgenome.lims.report">
+	<inherits name='net.sayaya.UI'/>
+	<inherits name='com.gcgenome.lims.Service'/>
+	<inherits name="com.gcgenome.lims.Icon"/>
+	<inherits name="com.gcgenome.lims.Panel"/>
+	<inherits name="net.sayaya.Chart"/>
+	<source path="util"/>
+	<entry-point class="com.gcgenome.lims.client.Main"/>
+	<collapse-all-properties/>
+</module>

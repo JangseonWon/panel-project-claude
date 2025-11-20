@@ -1,0 +1,100 @@
+pipeline {
+    agent any
+
+    parameters {
+        choice(name: 'DEPLOY_ENV', choices: ['test', 'prod'])
+    }
+
+    environment {
+         GITHUB_CREDS = credentials('github-creds')
+         GITHUB_USERNAME = "${GITHUB_CREDS_USR}"
+         GITHUB_TOKEN = "${GITHUB_CREDS_PSW}"
+    }
+
+    stages {
+        stage('Sequencing-UI Build') {
+            tools {
+                jdk 'java-17'
+                gradle 'gradle-7.4'
+            }
+            steps {
+                script {
+                    echo "Starting Sequencing-UI Build..."
+                    sh 'gradle :sequencing-ui:copyWebResources'
+                    buildAndDeployFE('sequencing-ui')
+                }
+            }
+        }
+
+        stage('DNA-UI Build') {
+            tools {
+                jdk 'java-17'
+                gradle 'gradle-7.4'
+            }
+            steps {
+                script {
+                    echo "Starting DNA-UI Build..."
+                    sh 'gradle :dna-ui:copyWebResources'
+                    buildAndDeployFE('dna-ui')
+                }
+            }
+        }
+
+        stage('Library-UI Build') {
+            tools {
+                jdk 'java-17'
+                gradle 'gradle-7.4'
+            }
+            steps {
+                script {
+                    echo "Starting Library-UI Build..."
+                    sh 'gradle :library-ui:copyWebResources'
+                    buildAndDeployFE('library-ui')
+                }
+            }
+        }
+    }
+}
+
+def deployToServer(jarPath, remotePath) {
+    def removePrefix = jarPath.substring(0, jarPath.lastIndexOf('/'))
+
+    echo "Deploying from: ${jarPath} with removePrefix: ${removePrefix} to remote path: ${remotePath}"
+
+    def transfers = [
+        sshTransfer(
+            sourceFiles: jarPath,
+            removePrefix: removePrefix,
+            remoteDirectory: remotePath,
+        )
+    ]
+
+    sshPublisher(
+        failOnError: true,
+        publishers: [
+            sshPublisherDesc(
+                configName: 'Aries',
+                transfers: transfers,
+                verbose: true
+            ),
+            sshPublisherDesc(
+                configName: 'Taurus',
+                transfers: transfers,
+                verbose: true
+            )
+        ]
+    )
+}
+
+def buildAndDeployFE(module) {
+    def sourcePath = "${module}/build/static"
+    def jarPath = "${sourcePath}/**"
+    def remotePath = 'lims/static/panel-service/'
+    def tempBuildPath = "/data/${remotePath}"
+
+    if (params.DEPLOY_ENV == 'test') {
+        sh "sudo rsync -a --no-perms ${sourcePath} ${tempBuildPath}"
+    } else if (params.DEPLOY_ENV == 'prod') {
+        deployToServer(jarPath, remotePath)
+    }
+}

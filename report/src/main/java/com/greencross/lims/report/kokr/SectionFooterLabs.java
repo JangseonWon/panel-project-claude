@@ -1,0 +1,33 @@
+package com.greencross.lims.report.kokr;
+
+import com.gcgenome.lims.report.Template;
+import com.gcgenome.lims.report.func.PDPageContentStreamPageAccessible;
+import com.gcgenome.lims.report.func.Painter;
+import com.greencross.lims.report.HasSign;
+import com.greencross.lims.report.builder.AbstractReportDto;
+import com.greencross.lims.report.builder.Util;
+import org.apache.pdfbox.pdmodel.graphics.image.PDImageXObject;
+
+import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.IOException;
+
+public class SectionFooterLabs<T extends Template<? extends HasSign>, D extends AbstractReportDto> implements Painter<T, D> {
+	private PDImageXObject img = null;
+	private final File resource = new File("/data/lims/resources");
+	@Override
+	public PDPageContentStreamPageAccessible paint(PDPageContentStreamPageAccessible stream, T template, D dto) throws IOException {
+		if(img == null) {
+			BufferedImage src = ImageIO.read(new File(resource, "/img/footer2-3.png"));
+			ByteArrayOutputStream baos = new ByteArrayOutputStream();
+			ImageIO.write(src, "png", baos);
+			img = PDImageXObject.createFromByteArray(template.resource().doc(), baos.toByteArray(), "footer.png");
+		}
+		stream.saveGraphicsState();
+		Util.icon(stream, img, 0, 80, 595, 100);
+		stream.restoreGraphicsState();
+		return stream;
+	}
+}

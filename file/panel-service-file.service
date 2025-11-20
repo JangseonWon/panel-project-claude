@@ -1,0 +1,16 @@
+[Unit]
+Description=LIMS NGS Panel Service: File Plugin
+
+[Service]
+WorkingDirectory=/usr/local/bin
+ExecStart=java -jar /data/lims/panel-service-file.jar --spring.config.location=/etc/lims/panel-service-file.yml
+ExecReload=/bin/kill -INT 
+KillMode=control-group
+Restart=on-failure
+TimeoutStopSec=10s
+Type=simple
+User=root
+Group=greencross
+
+[Install]
+WantedBy=multi-user.target

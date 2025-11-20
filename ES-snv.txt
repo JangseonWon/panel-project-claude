@@ -1,0 +1,1248 @@
+{
+    "aliases": {
+      "snv": {}
+    },
+    "mappings": {
+      "properties": {
+        "1000g": {
+          "type": "double"
+        },
+        "aa_af": {
+          "type": "text",
+          "fields": {
+            "keyword": {
+              "type": "keyword",
+              "ignore_above": 256
+            }
+          }
+        },
+        "acmg_reclass": {
+          "type": "text",
+          "fields": {
+            "keyword": {
+              "type": "keyword",
+              "ignore_above": 256
+            }
+          }
+        },
+        "ada_score": {
+          "type": "text",
+          "fields": {
+            "keyword": {
+              "type": "keyword",
+              "ignore_above": 256
+            }
+          }
+        },
+        "af_1000g_eas": {
+          "type": "text",
+          "fields": {
+            "keyword": {
+              "type": "keyword",
+              "ignore_above": 256
+            }
+          }
+        },
+        "af_1000g_sas": {
+          "type": "text",
+          "fields": {
+            "keyword": {
+              "type": "keyword",
+              "ignore_above": 256
+            }
+          }
+        },
+        "afr_af": {
+          "type": "text",
+          "fields": {
+            "keyword": {
+              "type": "keyword",
+              "ignore_above": 256
+            }
+          }
+        },
+        "alt": {
+          "type": "text",
+          "fields": {
+            "keyword": {
+              "type": "keyword",
+              "ignore_above": 256
+            }
+          }
+        },
+        "alt_depth": {
+          "type": "text",
+          "fields": {
+            "keyword": {
+              "type": "keyword",
+              "ignore_above": 256
+            }
+          }
+        },
+        "amr_af": {
+          "type": "text",
+          "fields": {
+            "keyword": {
+              "type": "keyword",
+              "ignore_above": 256
+            }
+          }
+        },
+        "base_quality": {
+          "type": "text",
+          "fields": {
+            "keyword": {
+              "type": "keyword",
+              "ignore_above": 256
+            }
+          }
+        },
+        "bic": {
+          "type": "text",
+          "fields": {
+            "keyword": {
+              "type": "keyword",
+              "ignore_above": 256
+            }
+          }
+        },
+        "biotype": {
+          "type": "text",
+          "fields": {
+            "keyword": {
+              "type": "keyword",
+              "ignore_above": 256
+            }
+          }
+        },
+        "brca2457_freq": {
+          "type": "text",
+          "fields": {
+            "keyword": {
+              "type": "keyword",
+              "ignore_above": 256
+            }
+          }
+        },
+        "cadd": {
+          "properties": {
+            "pred": {
+              "type": "double"
+            },
+            "raw": {
+              "type": "double"
+            }
+          }
+        },
+        "caller": {
+          "type": "text",
+          "fields": {
+            "keyword": {
+              "type": "keyword",
+              "ignore_above": 256
+            }
+          }
+        },
+        "cancer2770_freq": {
+          "type": "text",
+          "fields": {
+            "keyword": {
+              "type": "keyword",
+              "ignore_above": 256
+            }
+          }
+        },
+        "chrom": {
+          "type": "keyword"
+        },
+        "class": {
+          "type": "keyword"
+        },
+        "class_order": {
+          "type": "short"
+        },
+        "clinvar": {
+          "properties": {
+            "class": {
+              "type": "text",
+              "fields": {
+                "keyword": {
+                  "type": "keyword",
+                  "ignore_above": 256
+                }
+              }
+            },
+            "clndbn": {
+              "type": "text",
+              "fields": {
+                "keyword": {
+                  "type": "keyword",
+                  "ignore_above": 256
+                }
+              }
+            },
+            "clnrevstat": {
+              "type": "text",
+              "fields": {
+                "keyword": {
+                  "type": "keyword",
+                  "ignore_above": 256
+                }
+              }
+            },
+            "clnsig": {
+              "type": "text",
+              "fields": {
+                "keyword": {
+                  "type": "keyword",
+                  "ignore_above": 256
+                }
+              }
+            },
+            "id": {
+              "type": "keyword"
+            },
+            "updated_class": {
+              "type": "text",
+              "fields": {
+                "keyword": {
+                  "type": "keyword",
+                  "ignore_above": 256
+                }
+              }
+            },
+            "updated_review": {
+              "type": "text",
+              "fields": {
+                "keyword": {
+                  "type": "keyword",
+                  "ignore_above": 256
+                }
+              }
+            }
+          }
+        },
+        "codon": {
+          "type": "text",
+          "fields": {
+            "keyword": {
+              "type": "keyword",
+              "ignore_above": 256
+            }
+          },
+          "analyzer": "escape_slash_analyzer"
+        },
+        "consequence": {
+          "type": "text",
+          "fields": {
+            "keyword": {
+              "type": "keyword",
+              "ignore_above": 256
+            }
+          }
+        },
+        "cosmic_v90": {
+          "type": "text",
+          "fields": {
+            "keyword": {
+              "type": "keyword",
+              "ignore_above": 256
+            }
+          }
+        },
+        "cosmic_v90_cnt": {
+          "type": "text",
+          "fields": {
+            "keyword": {
+              "type": "keyword",
+              "ignore_above": 256
+            }
+          }
+        },
+        "cosmic_v90_legacy_id": {
+          "type": "text",
+          "fields": {
+            "keyword": {
+              "type": "keyword",
+              "ignore_above": 256
+            }
+          }
+        },
+        "create_at": {
+          "type": "date"
+        },
+        "dann": {
+          "properties": {
+            "score": {
+              "type": "double"
+            }
+          }
+        },
+        "dbscsnv1": {
+          "properties": {
+            "1_ada_score": {
+              "type": "double"
+            },
+            "1_rf_score": {
+              "type": "double"
+            }
+          }
+        },
+        "dbsnp": {
+          "type": "keyword"
+        },
+        "disease_description": {
+          "type": "text",
+          "fields": {
+            "keyword": {
+              "type": "text"
+            }
+          }
+        },
+        "ea_af": {
+          "type": "text",
+          "fields": {
+            "keyword": {
+              "type": "keyword",
+              "ignore_above": 256
+            }
+          }
+        },
+        "eas_af": {
+          "type": "text",
+          "fields": {
+            "keyword": {
+              "type": "keyword",
+              "ignore_above": 256
+            }
+          }
+        },
+        "effect_level": {
+          "type": "text",
+          "fields": {
+            "keyword": {
+              "type": "keyword",
+              "ignore_above": 256
+            }
+          }
+        },
+        "esp6500": {
+          "properties": {
+            "all": {
+              "type": "double"
+            }
+          }
+        },
+        "essential_gene": {
+          "type": "text",
+          "fields": {
+            "keyword": {
+              "type": "keyword",
+              "ignore_above": 256
+            }
+          }
+        },
+        "eur_af": {
+          "type": "text",
+          "fields": {
+            "keyword": {
+              "type": "keyword",
+              "ignore_above": 256
+            }
+          }
+        },
+        "exac": {
+          "properties": {
+            "all": {
+              "type": "double"
+            },
+            "eas": {
+              "type": "double"
+            },
+            "sas": {
+              "type": "double"
+            }
+          }
+        },
+        "existing_variation": {
+          "type": "text",
+          "fields": {
+            "keyword": {
+              "type": "keyword",
+              "ignore_above": 256
+            }
+          }
+        },
+        "exon": {
+          "type": "text",
+          "fields": {
+            "keyword": {
+              "type": "keyword",
+              "ignore_above": 256
+            }
+          },
+          "analyzer": "escape_slash_analyzer"
+        },
+        "exon_in_hgmd": {
+          "type": "text",
+          "fields": {
+            "keyword": {
+              "type": "keyword",
+              "ignore_above": 256
+            }
+          },
+          "analyzer": "escape_slash_analyzer"
+        },
+        "fathmm": {
+          "properties": {
+            "pred": {
+              "type": "keyword"
+            },
+            "score": {
+              "type": "text",
+              "fields": {
+                "keyword": {
+                  "type": "keyword",
+                  "ignore_above": 256
+                }
+              }
+            }
+          }
+        },
+        "fathmm-mkl_coding": {
+          "properties": {
+            "pred": {
+              "type": "text",
+              "fields": {
+                "keyword": {
+                  "type": "keyword",
+                  "ignore_above": 256
+                }
+              }
+            },
+            "score": {
+              "type": "double"
+            }
+          }
+        },
+        "function_description": {
+          "type": "text",
+          "fields": {
+            "keyword": {
+              "type": "text"
+            }
+          }
+        },
+        "gene": {
+          "properties": {
+            "full_name": {
+              "type": "text",
+              "fields": {
+                "keyword": {
+                  "type": "keyword",
+                  "ignore_above": 256
+                }
+              }
+            },
+            "refgene": {
+              "type": "keyword"
+            }
+          }
+        },
+        "genomicsuperdups": {
+          "type": "text",
+          "fields": {
+            "keyword": {
+              "type": "keyword",
+              "ignore_above": 256
+            }
+          }
+        },
+        "gerp++": {
+          "properties": {
+            "gt2": {
+              "type": "double"
+            },
+            "rs": {
+              "type": "double"
+            }
+          }
+        },
+        "gnomad": {
+          "properties": {
+            "exome": {
+              "properties": {
+                "afr": {
+                  "type": "double"
+                },
+                "all": {
+                  "type": "double"
+                },
+                "amr": {
+                  "type": "double"
+                },
+                "asj": {
+                  "type": "double"
+                },
+                "eas": {
+                  "type": "double"
+                },
+                "eas_kor": {
+                  "type": "double"
+                },
+                "fin": {
+                  "type": "double"
+                },
+                "nfe": {
+                  "type": "double"
+                },
+                "oth": {
+                  "type": "double"
+                },
+                "sas": {
+                  "type": "double"
+                }
+              }
+            },
+            "genome": {
+              "properties": {
+                "afr": {
+                  "type": "double"
+                },
+                "all": {
+                  "type": "double"
+                },
+                "amr": {
+                  "type": "double"
+                },
+                "asj": {
+                  "type": "double"
+                },
+                "eas": {
+                  "type": "double"
+                },
+                "fin": {
+                  "type": "double"
+                },
+                "nfe": {
+                  "type": "double"
+                },
+                "oth": {
+                  "type": "double"
+                }
+              }
+            },
+            "total": {
+              "type": "double"
+            }
+          }
+        },
+        "go": {
+          "properties": {
+            "biological_process": {
+              "type": "text",
+              "fields": {
+                "keyword": {
+                  "type": "text"
+                }
+              }
+            },
+            "cellular_component": {
+              "type": "text",
+              "fields": {
+                "keyword": {
+                  "type": "text"
+                }
+              }
+            },
+            "molecular_function": {
+              "type": "text",
+              "fields": {
+                "keyword": {
+                  "type": "text"
+                }
+              }
+            }
+          }
+        },
+        "hgmd": {
+          "properties": {
+            "hgvsc": {
+              "type": "text",
+              "fields": {
+                "keyword": {
+                  "type": "keyword",
+                  "ignore_above": 256
+                }
+              },
+              "analyzer": "escape_special_characters_analyzer"
+            },
+            "hgvsp": {
+              "type": "text",
+              "fields": {
+                "keyword": {
+                  "type": "keyword",
+                  "ignore_above": 256
+                }
+              },
+              "analyzer": "escape_special_characters_analyzer"
+            },
+            "mut": {
+              "type": "keyword"
+            },
+            "pmid": {
+              "type": "keyword"
+            },
+            "tag": {
+              "type": "keyword"
+            },
+            "web": {
+              "properties": {
+                "disease": {
+                  "type": "text",
+                  "fields": {
+                    "keyword": {
+                      "type": "keyword",
+                      "ignore_above": 256
+                    }
+                  }
+                },
+                "literature": {
+                  "type": "text",
+                  "fields": {
+                    "keyword": {
+                      "type": "keyword",
+                      "ignore_above": 256
+                    }
+                  }
+                },
+                "tag": {
+                  "type": "keyword"
+                }
+              }
+            }
+          }
+        },
+        "hgvsc": {
+          "type": "text",
+          "fields": {
+            "keyword": {
+              "type": "keyword",
+              "ignore_above": 256
+            }
+          },
+          "analyzer": "escape_special_characters_analyzer"
+        },
+        "hgvsp": {
+          "type": "text",
+          "fields": {
+            "keyword": {
+              "type": "keyword",
+              "ignore_above": 256
+            }
+          },
+          "analyzer": "escape_special_characters_analyzer"
+        },
+        "hgvsp_short": {
+          "type": "text",
+          "fields": {
+            "keyword": {
+              "type": "keyword",
+              "ignore_above": 256
+            }
+          }
+        },
+        "impact": {
+          "type": "text",
+          "fields": {
+            "keyword": {
+              "type": "keyword",
+              "ignore_above": 256
+            }
+          }
+        },
+        "inhousedb(wes300+als312)": {
+          "type": "text",
+          "fields": {
+            "keyword": {
+              "type": "keyword",
+              "ignore_above": 256
+            }
+          }
+        },
+        "interpro_domain": {
+          "type": "text",
+          "fields": {
+            "keyword": {
+              "type": "keyword",
+              "ignore_above": 256
+            }
+          }
+        },
+        "intervar": {
+          "properties": {
+            "class": {
+              "type": "text",
+              "fields": {
+                "keyword": {
+                  "type": "keyword",
+                  "ignore_above": 256
+                }
+              }
+            },
+            "evidence": {
+              "properties": {
+                "bv": {
+                  "type": "text",
+                  "fields": {
+                    "keyword": {
+                      "type": "keyword",
+                      "ignore_above": 256
+                    }
+                  },
+                  "analyzer": "escape_special_characters_analyzer"
+                },
+                "pv": {
+                  "type": "text",
+                  "fields": {
+                    "keyword": {
+                      "type": "keyword",
+                      "ignore_above": 256
+                    }
+                  },
+                  "analyzer": "escape_special_characters_analyzer"
+                }
+              }
+            },
+            "evidence_": {
+              "type": "text",
+              "fields": {
+                "keyword": {
+                  "type": "keyword",
+                  "ignore_above": 256
+                }
+              },
+              "analyzer": "escape_special_characters_analyzer"
+            }
+          }
+        },
+        "intervar_": {
+          "type": "keyword"
+        },
+        "known_rec_info": {
+          "type": "keyword"
+        },
+        "koncord_class": {
+          "type": "text",
+          "fields": {
+            "keyword": {
+              "type": "keyword",
+              "ignore_above": 256
+            }
+          }
+        },
+        "krg_db_1100": {
+          "type": "double"
+        },
+        "krg_freq": {
+          "type": "text",
+          "fields": {
+            "keyword": {
+              "type": "keyword",
+              "ignore_above": 256
+            }
+          }
+        },
+        "krg_no": {
+          "properties": {
+            "allele": {
+              "type": "text",
+              "fields": {
+                "keyword": {
+                  "type": "keyword",
+                  "ignore_above": 256
+                }
+              }
+            }
+          }
+        },
+        "krgdb_af": {
+          "type": "double"
+        },
+        "last_modify_at": {
+          "type": "date"
+        },
+        "lovd_class": {
+          "type": "text",
+          "fields": {
+            "keyword": {
+              "type": "keyword",
+              "ignore_above": 256
+            }
+          }
+        },
+        "lrt": {
+          "properties": {
+            "pred": {
+              "type": "keyword"
+            },
+            "score": {
+              "type": "double"
+            }
+          }
+        },
+        "m-cap": {
+          "properties": {
+            "pred": {
+              "type": "keyword"
+            },
+            "score": {
+              "type": "double"
+            }
+          }
+        },
+        "max_popfreq(1k_&_gnomad_&_krg)": {
+          "type": "text",
+          "fields": {
+            "keyword": {
+              "type": "keyword",
+              "ignore_above": 256
+            }
+          }
+        },
+        "metalr": {
+          "properties": {
+            "pred": {
+              "type": "keyword"
+            },
+            "score": {
+              "type": "double"
+            }
+          }
+        },
+        "metasvm": {
+          "properties": {
+            "pred": {
+              "type": "keyword"
+            },
+            "score": {
+              "type": "double"
+            }
+          }
+        },
+        "mgi_mouse": {
+          "properties": {
+            "gene": {
+              "type": "text",
+              "fields": {
+                "keyword": {
+                  "type": "keyword",
+                  "ignore_above": 256
+                }
+              }
+            },
+            "phenotype": {
+              "type": "text",
+              "fields": {
+                "keyword": {
+                  "type": "keyword",
+                  "ignore_above": 256
+                }
+              }
+            }
+          }
+        },
+        "mim": {
+          "properties": {
+            "disease": {
+              "type": "text",
+              "fields": {
+                "keyword": {
+                  "type": "text"
+                }
+              }
+            },
+            "inheritance": {
+              "type": "text",
+              "fields": {
+                "keyword": {
+                  "type": "keyword",
+                  "ignore_above": 256
+                }
+              }
+            },
+            "phenotype_id": {
+              "type": "text",
+              "fields": {
+                "keyword": {
+                  "type": "keyword",
+                  "ignore_above": 256
+                }
+              }
+            }
+          }
+        },
+        "mutationassessor": {
+          "properties": {
+            "pred": {
+              "type": "keyword"
+            },
+            "score": {
+              "type": "keyword"
+            }
+          }
+        },
+        "mutationtaster": {
+          "properties": {
+            "pred": {
+              "type": "keyword"
+            },
+            "score": {
+              "type": "keyword"
+            }
+          }
+        },
+        "mutect2_filter": {
+          "type": "text",
+          "fields": {
+            "keyword": {
+              "type": "keyword",
+              "ignore_above": 256
+            }
+          }
+        },
+        "ncc": {
+          "properties": {
+            "class": {
+              "type": "text",
+              "fields": {
+                "keyword": {
+                  "type": "keyword",
+                  "ignore_above": 256
+                }
+              }
+            },
+            "interpret": {
+              "type": "text",
+              "fields": {
+                "keyword": {
+                  "type": "text"
+                }
+              }
+            },
+            "sample": {
+              "type": "text",
+              "fields": {
+                "keyword": {
+                  "type": "keyword",
+                  "ignore_above": 256
+                }
+              }
+            }
+          }
+        },
+        "oncokb(abstract_for_mutation_effect)": {
+          "type": "text",
+          "fields": {
+            "keyword": {
+              "type": "keyword",
+              "ignore_above": 256
+            }
+          }
+        },
+        "oncokb(mutation_effect)": {
+          "type": "text",
+          "fields": {
+            "keyword": {
+              "type": "keyword",
+              "ignore_above": 256
+            }
+          }
+        },
+        "oncokb(oncogenicity)": {
+          "type": "text",
+          "fields": {
+            "keyword": {
+              "type": "keyword",
+              "ignore_above": 256
+            }
+          }
+        },
+        "oncokb(pmids_for_mutation_effect)": {
+          "type": "text",
+          "fields": {
+            "keyword": {
+              "type": "keyword",
+              "ignore_above": 256
+            }
+          }
+        },
+        "oncokb_anno(hgvsp_converted)": {
+          "type": "text",
+          "fields": {
+            "keyword": {
+              "type": "keyword",
+              "ignore_above": 256
+            }
+          }
+        },
+        "oncokb_anno(hgvsp_protein_change)": {
+          "type": "text",
+          "fields": {
+            "keyword": {
+              "type": "keyword",
+              "ignore_above": 256
+            }
+          }
+        },
+        "organism": {
+          "type": "keyword"
+        },
+        "p(hi)": {
+          "type": "double"
+        },
+        "p(rec)": {
+          "type": "double"
+        },
+        "pathway(kegg)_full": {
+          "type": "text",
+          "fields": {
+            "keyword": {
+              "type": "keyword",
+              "ignore_above": 256
+            }
+          }
+        },
+        "phastcons20way_mammalian": {
+          "type": "double"
+        },
+        "phylop20way_mammalian": {
+          "type": "double"
+        },
+        "polyphen": {
+          "properties": {
+            "pred": {
+              "type": "keyword"
+            },
+            "score": {
+              "type": "double"
+            }
+          }
+        },
+        "polyphen2": {
+          "properties": {
+            "hdiv": {
+              "properties": {
+                "pred": {
+                  "type": "keyword"
+                },
+                "score": {
+                  "type": "double"
+                }
+              }
+            },
+            "hvar": {
+              "properties": {
+                "pred": {
+                  "type": "keyword"
+                },
+                "score": {
+                  "type": "double"
+                }
+              }
+            }
+          }
+        },
+        "pos": {
+          "type": "long"
+        },
+        "provean": {
+          "properties": {
+            "pred": {
+              "type": "keyword"
+            },
+            "score": {
+              "type": "double"
+            }
+          }
+        },
+        "ref": {
+          "type": "text",
+          "fields": {
+            "keyword": {
+              "type": "keyword",
+              "ignore_above": 256
+            }
+          }
+        },
+        "reference": {
+          "type": "keyword"
+        },
+        "region_info": {
+          "type": "text",
+          "fields": {
+            "keyword": {
+              "type": "keyword",
+              "ignore_above": 256
+            }
+          }
+        },
+        "rf_score": {
+          "type": "text",
+          "fields": {
+            "keyword": {
+              "type": "keyword",
+              "ignore_above": 256
+            }
+          }
+        },
+        "rmsk": {
+          "type": "text",
+          "fields": {
+            "keyword": {
+              "type": "keyword",
+              "ignore_above": 256
+            }
+          },
+          "analyzer": "escape_special_characters_analyzer"
+        },
+        "sge_class(brca1)": {
+          "type": "text",
+          "fields": {
+            "keyword": {
+              "type": "keyword",
+              "ignore_above": 256
+            }
+          }
+        },
+        "sift": {
+          "properties": {
+            "pred": {
+              "type": "keyword"
+            },
+            "score": {
+              "type": "double"
+            }
+          }
+        },
+        "siphy_29way_logodds": {
+          "type": "double"
+        },
+        "so_term": {
+          "type": "text",
+          "fields": {
+            "keyword": {
+              "type": "keyword",
+              "ignore_above": 256
+            }
+          }
+        },
+        "spliceai_ds_max": {
+          "type": "text",
+          "fields": {
+            "keyword": {
+              "type": "keyword",
+              "ignore_above": 256
+            }
+          }
+        },
+        "splicing_distance": {
+          "type": "long"
+        },
+        "strand": {
+          "type": "boolean"
+        },
+        "tags": {
+          "type": "keyword"
+        },
+        "tier": {
+          "type": "keyword"
+        },
+        "trait_association(gwas)": {
+          "type": "text",
+          "fields": {
+            "keyword": {
+              "type": "text"
+            }
+          }
+        },
+        "vest3_score": {
+          "type": "double"
+        },
+        "wes300_af": {
+          "type": "text",
+          "fields": {
+            "keyword": {
+              "type": "keyword",
+              "ignore_above": 256
+            }
+          }
+        },
+        "wes_als312_af": {
+          "type": "text",
+          "fields": {
+            "keyword": {
+              "type": "keyword",
+              "ignore_above": 256
+            }
+          }
+        }
+      }
+    },
+    "settings": {
+      "index": {
+        "number_of_shards": "64",
+
+        "analysis": {
+          "analyzer": {
+            "escape_special_characters_analyzer": {
+              "filter": [
+                "lowercase",
+                "stop",
+                "snowball"
+              ],
+              "char_filter": [
+                "special_character_filter"
+              ],
+              "tokenizer": "whitespace"
+            },
+            "escape_slash_analyzer": {
+              "filter": [
+                "lowercase",
+                "stop",
+                "snowball"
+              ],
+              "char_filter": [
+                "slash_filter"
+              ],
+              "tokenizer": "whitespace"
+            }
+          },
+          "char_filter": {
+            "special_character_filter": {
+              "type": "mapping",
+              "mappings": [
+                ": => _doublecolon_",
+                "> => _greaterthan_",
+                "< => _lessthan_",
+                ". => _dot_",
+                "= => _equals_",
+                "+ => _plus_",
+                "- => _minus_",
+                "( => _openbracket_",
+                ") => _closebracket_"
+              ]
+            },
+            "slash_filter": {
+              "type": "mapping",
+              "mappings": [
+                "/ => _slash_"
+              ]
+            }
+          }
+        },
+        "number_of_replicas": "3"
+
+    }
+  }
+}

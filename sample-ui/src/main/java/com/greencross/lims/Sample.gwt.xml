@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module rename-to="com.greencross.lims.sample">
+	<inherits name='net.sayaya.UI'/>
+	<entry-point class='com.greencross.lims.client.Main'/>
+	<source path='client'/>
+	<source path='api'/>
+	<source path='dto'/>
+	<source path='util'/>
+	<collapse-all-properties/>
+</module>

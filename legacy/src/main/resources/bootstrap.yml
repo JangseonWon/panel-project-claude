@@ -1,0 +1,11 @@
+spring:
+  application:
+    name: panel-service
+  cloud:
+    config:
+      uri: http://gemini:24839, http://pisces:24839
+      profile: 1.0
+      label: master
+eureka:
+  client:
+    enabled: false

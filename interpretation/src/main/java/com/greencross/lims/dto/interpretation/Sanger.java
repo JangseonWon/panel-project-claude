@@ -1,0 +1,31 @@
+package com.greencross.lims.dto.interpretation;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.experimental.Accessors;
+
+@Setter
+@Getter
+@Accessors(fluent=true)
+@JsonIgnoreProperties(ignoreUnknown = true)
+public class Sanger {
+	private String interpretation;
+	private Variant[] variants;
+	private Boolean hasProbandSpecimen;
+	@Setter
+	@Getter
+	@Accessors(fluent=true)
+	@JsonIgnoreProperties(ignoreUnknown = true)
+	public static final class Variant {
+		private String gene;
+		private String hgvsc;
+		private String hgvsp;
+		private String zygosity;
+		private String result;
+		@JsonProperty("class")
+		private String clazz;
+		private String sanger;
+	}
+}

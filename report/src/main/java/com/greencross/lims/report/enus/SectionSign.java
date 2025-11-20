@@ -1,0 +1,62 @@
+package com.greencross.lims.report.enus;
+
+import com.gcgenome.lims.report.Template;
+import com.gcgenome.lims.report.TextBlock;
+import com.gcgenome.lims.report.TextStyle;
+import com.gcgenome.lims.report.func.PDPageContentStreamPageAccessible;
+import com.gcgenome.lims.report.func.Painter;
+import com.greencross.lims.report.HasSign;
+import com.greencross.lims.report.builder.AbstractReportDto;
+import com.greencross.lims.report.builder.Util;
+import org.apache.pdfbox.pdmodel.graphics.image.PDImageXObject;
+
+import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
+
+import static com.gcgenome.lims.report.func.AlignVertical.MIDDLE;
+
+public class SectionSign<T extends Template<? extends HasSign>, D extends AbstractReportDto> implements Painter<T, D> {
+	private final float y;
+	public SectionSign(float y) {
+		this.y = y;
+	}
+	private final Map<HasSign.Person, PDImageXObject> signs = new HashMap<>();
+	private final static float SIGN_WIDTH_MAX = 28;
+	private final static float SIGN_HEIGHT_MAX = 20;
+	@Override
+	public PDPageContentStreamPageAccessible paint(PDPageContentStreamPageAccessible stream, T template, D dto) throws IOException {
+		TextStyle style = template.resource().stylePerson();
+		float widthTotal = 0;
+		for(var label: template.resource().labels()) {
+			TextBlock block = new TextBlock(style, label.label());
+			widthTotal += block.width();
+			widthTotal += 2;
+			for(HasSign.Person person : label.persons()){
+				block = new TextBlock(style, person.nameEnWithTitle() + "(" + person.license() + ")");
+				if(!signs.containsKey(person)) signs.put(person, PDImageXObject.createFromFileByContent(person.sign(), template.resource().doc()));
+				widthTotal += block.width() + SIGN_WIDTH_MAX + 3;
+			}
+		}
+
+		stream.saveGraphicsState();
+		float x = 287f - widthTotal/2;
+		for(var label: template.resource().labels()) {
+			TextBlock block = new TextBlock(style, label.label());
+			stream.paragraph(x, y+SIGN_HEIGHT_MAX/2, 120, MIDDLE, block);
+			x += block.width();
+			x += 1;
+			for(var person: label.persons()) {
+				block = new TextBlock(style, person.nameEnWithTitle());
+				TextBlock licenseBlock = new TextBlock(style.clone().fontSize(6),"(" + person.license() + ")");
+
+				var sign = signs.get(person);
+				Util.icon(stream, sign, x + block.width() + licenseBlock.width(), y+SIGN_HEIGHT_MAX-2, SIGN_WIDTH_MAX, SIGN_HEIGHT_MAX);
+				stream.paragraph(x, y+SIGN_HEIGHT_MAX/2, block.width()+5, MIDDLE, block, licenseBlock);
+				x += block.width() + licenseBlock.width() + SIGN_WIDTH_MAX + 5;
+			}
+		}
+		stream.restoreGraphicsState();
+		return stream;
+	}
+}

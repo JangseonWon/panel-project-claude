@@ -1,0 +1,71 @@
+plugins {
+    id "org.springframework.boot" version "2.4.2"
+}
+apply plugin: "java"
+apply plugin: "io.spring.dependency-management"
+
+group = "com.greencross"
+archivesBaseName = "panel-service-worklist.jar"
+version = "1.0"
+[compileJava, compileTestJava]*.options*.encoding = 'UTF-8'
+
+repositories {
+    mavenCentral()
+    mavenLocal()
+}
+
+dependencies {
+    implementation project(":data")
+    implementation('com.greencross:lims-api-gateway-data:1.0')
+    implementation('com.greencross:lims-service-data:1.0')
+    implementation("org.springframework.boot:spring-boot-starter-webflux")
+    implementation("org.springframework.boot:spring-boot-starter-data-r2dbc")
+    implementation("com.infobip:infobip-spring-data-r2dbc-querydsl-boot-starter:5.0.4")
+    implementation('org.springframework.retry:spring-retry')
+    implementation("org.springframework.cloud:spring-cloud-starter-zookeeper-discovery")
+    implementation('org.springframework.cloud:spring-cloud-starter-config')
+    implementation("org.springframework.boot:spring-boot-starter-log4j2"){
+        exclude group: "org.apache.logging.log4j", module: "log4j-core"
+    }
+    implementation("org.apache.logging.log4j:log4j-core:2.16.0")
+    implementation('org.springframework.boot:spring-boot-starter-actuator')
+
+    compileOnly("org.projectlombok:lombok")
+    annotationProcessor("org.projectlombok:lombok")
+    runtimeOnly("io.r2dbc:r2dbc-postgresql")
+    annotationProcessor("javax.annotation:javax.annotation-api")
+    annotationProcessor("com.infobip:infobip-spring-data-jdbc-annotation-processor:5.0.4")
+
+    implementation("io.springfox:springfox-boot-starter:3.0.0")
+    implementation("io.springfox:springfox-swagger-ui")
+}
+
+dependencyManagement {
+    imports {
+        mavenBom "org.springframework.cloud:spring-cloud-dependencies:2020.0.1"
+    }
+}
+configurations {
+    all*.exclude group:'org.springframework.boot', module:'spring-boot-starter-logging'
+}
+
+subprojects {
+    group 'com.greencross'
+    version '1.0'
+    apply plugin: 'java'
+    repositories {
+        mavenLocal()
+        mavenCentral()
+    }
+}
+sourceSets {
+    main.java.srcDir "$buildDir/generated"
+}
+
+bootJar {
+    archiveFileName = "panel-service-worklist.jar"
+}
+clean.doFirst {
+    delete "src/main/resources/static"
+    delete "build/"
+}

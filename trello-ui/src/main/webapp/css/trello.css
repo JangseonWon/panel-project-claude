@@ -1,0 +1,184 @@
+.button,
+.button .mdc-notched-outline__leading,
+.button .mdc-notched-outline__trailing {
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    border-right: 0;
+    user-select: none;
+    outline-style: none;
+    letter-spacing: 1px;
+    border-radius: 0 !important;
+    border-color: rgba(0,0,0,.38);
+    height: 2.6em;
+}
+.mdc-button--outlined:not(:disabled) {
+    border-color: rgba(0,0,0,.38);
+}
+.button:first-child, .button:first-child .mdc-notched-outline__leading {
+    border-top-left-radius: 5px !important;
+    border-bottom-left-radius: 5px !important;
+}
+.button:last-child, .button:last-child .mdc-notched-outline__trailing {
+    border-right: 1px solid rgba(0,0,0,.38);
+    border-top-right-radius: 5px !important;
+    border-bottom-right-radius: 5px !important;
+}
+.button .mdc-select__anchor {
+    height: 2.6em;
+}
+.button.mdc-notched-outline--upgraded .mdc-floating-label--float-above,
+.button .mdc-notched-outline--upgraded .mdc-floating-label--float-above,
+.button .mdc-select__anchor.mdc-notched-outline--upgraded .mdc-floating-label--float-above,
+.button .mdc-select__anchor .mdc-notched-outline--upgraded .mdc-floating-label--float-above{
+    -webkit-transform: translateY(-1.5rem) scale(0.75);
+    transform: translateY(-1.5rem) scale(0.75);
+}
+.background {
+    position: absolute;
+    top: 95px;
+    bottom: 10px;
+    left: 20px;
+    right: 20px;
+    overflow: hidden;
+    transition: all 150ms ease 0s;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
+    grid-gap: 10px;
+}
+.track {
+    border: 1px solid #ddd;
+    grid-row: 1;
+    overflow: hidden;
+    border-top-right-radius: 10px;
+    border-top-left-radius: 10px;
+}
+.track > * {
+    line-break: anywhere;
+}
+.track .title {
+    height: 2em;
+    line-height: 2em;
+    padding: 5px;
+}
+.track .title > * {
+    vertical-align: middle;
+    margin-left: 5px;
+    color: #FFFFFF;
+}
+.track .contents {
+    background-color: var(--mdc-theme-background);
+    overflow-y: auto;
+    overflow-x: hidden;
+    height: calc(100% - 38px);
+}
+.deck {
+    padding: 5px;
+}
+.deck table {
+    width: 100%;
+    font-size: 12px;
+}
+.deck table > tbody > tr > td:last-child {
+    text-align: right
+}
+.deck .right {
+    text-align: right;
+}
+.deck .emergency {
+    color: #FE5000;
+}
+.deck .top {
+    position: relative;
+    padding: 5px;
+    width: calc(100% - 14px);
+    z-index: 3;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.deck .top > * > * {
+    display: block;
+    text-align: center;
+}
+
+.deck .stacked {
+    position: absolute;
+    height: 155px;
+    width: calc(100% - 4px);
+}
+.deck .stacked:nth-child(2) {
+    z-index: 2;
+    top: 2px;
+    left: 2px;
+}
+.deck .stacked:nth-child(3) {
+    z-index: 1;
+    top: 4px;
+    left: 4px;
+}
+.card {
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    min-height: 145px;
+    background-color: #FFFFFF;
+    box-shadow: rgba(0, 0, 0, 0.05) 1px 1px 4px;
+}
+
+.card-selected {
+    box-shadow: rgba(0, 0, 0, 0.23) 3px 3px 6px;
+}
+
+.deck .close-button {
+    width: 15px;
+    height: calc(100% - 2px);
+    right: 0;
+    position: absolute;
+    border-right: 1px solid #aaa;
+    border-top: 1px solid #aaa;
+    border-bottom: 1px solid #aaa;
+    border-top-right-radius: 5px;
+    border-bottom-right-radius: 5px;
+    cursor: pointer;
+    transition: all 150ms ease 0s, box-shadow 0ms ease 0s;
+}
+.deck .close-button > * {
+    border: 1px solid #aaa;
+    border-radius: 2px;
+    width: 10px;
+    height: 10px;
+    position: absolute;
+    right: -6px;
+    top: calc(50% - 6px);
+    background-color: var(--mdc-theme-background);
+    line-height: 9px;
+    font-size: 15px;
+    text-align: center;
+}
+.deck .close-button:hover {
+    border-right: 1px solid var(--mdc-theme-secondary);
+    border-top: 1px solid var(--mdc-theme-secondary);
+    border-bottom: 1px solid var(--mdc-theme-secondary);
+}
+.deck .close-button:hover > * {
+    border: 1px solid var(--mdc-theme-secondary);
+    color: var(--mdc-theme-secondary);
+}
+.deck .open {
+    position: relative;
+    padding: 5px;
+    margin-bottom: 5px;
+    width: calc(100% - 34px);
+    transition: all 300ms ease 0s;
+}
+.deck .open .id {
+    font-size: 13px;
+    line-height: 2em;
+}
+.deck .emergency-issue {
+    background-color: #FF6C2F;
+}
+
+.deck .emergency-issue a {
+    color: #FFFFFF;
+}

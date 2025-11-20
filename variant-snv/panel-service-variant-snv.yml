@@ -1,0 +1,30 @@
+spring:
+  application:
+    name: variant-snv-service
+  main:
+    web-application-type: reactive
+  cloud:
+    zookeeper:
+      connect-string: gemini:2181,pisces:2181,aries:2181,taurus:2181
+      discovery:
+        root: /panel-services
+  jpa:
+    properties:
+      hibernate:
+        format_sql: true
+        jdbc:
+          lob:
+            non_contextual_creation: true
+  datasource:
+    url: jdbc:postgresql://gemini:5432/lims
+    username: panel
+    password: snubi1004
+    driver-class-name: org.postgresql.Driver
+  data:
+    elasticsearch:
+      client:
+        reactive:
+          endpoints: gemini:9200,pisces:9200
+  elasticsearch.rest.uris: gemini:9200,pisces:9200
+server:
+  port: 0
